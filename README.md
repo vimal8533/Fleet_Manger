@@ -3,10 +3,14 @@
 [![Java](https://img.shields.io/badge/Java-21-orange.svg?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-green.svg?style=flat-square&logo=springboot)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue.svg?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
-[![Build Status](https://img.shields.io/badge/Tests-18%2F18%20Passing-brightgreen.svg?style=flat-square)](https://github.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Active_Online-brightgreen.svg?style=flat-square&logo=github)](https://vimal8533.github.io/Fleet_Manger/)
+[![Build Status](https://img.shields.io/badge/Tests-18%2F18%20Passing-brightgreen.svg?style=flat-square)](https://github.com/vimal8533/Fleet_Manger)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg?style=flat-square)](LICENSE)
 
 An enterprise-grade **Autonomous Guided Vehicle (AGV) Fleet Management & Dispatch System** built with **Java 21**, **Spring Boot**, and **PostgreSQL**. The platform features real-time prioritized mission assignment, **Dijkstra shortest-path routing**, single-lane track mutual exclusion, and **deadlock-free collision avoidance with dynamic detour bypasses**.
+
+> 🌐 **Interactive Live Cloud Demo:** Anyone can test the live AGV simulation, Dijkstra route preview, and mission dispatching directly in their browser without installing anything:  
+> 👉 **[https://vimal8533.github.io/Fleet_Manger/](https://vimal8533.github.io/Fleet_Manger/)**
 
 ---
 

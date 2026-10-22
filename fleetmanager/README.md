@@ -3,16 +3,20 @@
 [![Java](https://img.shields.io/badge/Java-21-orange.svg?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-green.svg?style=flat-square&logo=springboot)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-blue.svg?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
-[![Build Status](https://img.shields.io/badge/Tests-18%2F18%20Passing-brightgreen.svg?style=flat-square)](https://github.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Active_Online-brightgreen.svg?style=flat-square&logo=github)](https://vimal8533.github.io/Fleet_Manger/)
+[![Build Status](https://img.shields.io/badge/Tests-18%2F18%20Passing-brightgreen.svg?style=flat-square)](https://github.com/vimal8533/Fleet_Manger)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg?style=flat-square)](LICENSE)
 
 An enterprise-grade **Autonomous Guided Vehicle (AGV) Fleet Management & Dispatch System** built with **Java 21**, **Spring Boot**, and **PostgreSQL**. The platform features real-time prioritized mission assignment, **Dijkstra shortest-path routing**, single-lane track mutual exclusion, and **deadlock-free collision avoidance with dynamic detour bypasses**.
+
+> 🌐 **Interactive Live Cloud Demo:** Anyone can test the live AGV simulation, Dijkstra route preview, and mission dispatching directly in their browser without installing anything:  
+> 👉 **[https://vimal8533.github.io/Fleet_Manger/](https://vimal8533.github.io/Fleet_Manger/)**
 
 ---
 
 ## 📸 Live Command Center & Interactive Floor Map
 
-![Fleet Manager Command Center](src/main/resources/static/dashboard-preview.png)
+![Fleet Manager Command Center](fleetmanager/src/main/resources/static/dashboard-preview.png)
 
 *Real-time SVG floor map tracking 5 stations (A, B, C, D, E), glowing Dijkstra route calculations, live AGV battery/telemetry monitors, and prioritized mission queue.*
 
@@ -213,7 +217,7 @@ Open **`http://localhost:8080/`** in your browser to access the command center d
 ## 📄 Complete Engineering Manual & PDF
 
 A comprehensive architectural manual is available inside the project:
-- **PDF Study Guide**: [`Fleet_Manager_Complete_Study_Guide.pdf`](Fleet_Manager_Complete_Study_Guide.pdf)
+- **PDF Study Guide**: [`Fleet_Manager_Complete_Study_Guide.pdf`](fleetmanager/Fleet_Manager_Complete_Study_Guide.pdf)
 - **Web Printable Guide**: Open `http://localhost:8080/study-guide.html` and press `Ctrl + P`.
 
 ---
@@ -225,3 +229,4 @@ A comprehensive architectural manual is available inside the project:
 > - Engineered an exclusive **Resource Scheduler** with station locks and canonical edge locks, mathematically eliminating head-on and rear-end collisions on single-lane corridors.
 > - Implemented deadlock detection with **dynamic detour bypasses**, breaking circular wait states after &ge;2 cycles by re-routing through alternate perimeter aisles.
 > - Achieved **100% test coverage (18/18 test suites passing)** across router, dispatcher, task lifecycle, and concurrent mutual exclusion locks.
+
