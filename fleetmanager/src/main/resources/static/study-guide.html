@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous Robot Fleet Manager | Complete Engineering Study Manual & Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1422;
+      --card-bg: #182033;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-title h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-title p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .btn-print {
+      background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+      transition: transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-print:hover {
+      transform: translateY(-2px);
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      color: var(--primary-light);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p, li {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    li { margin-bottom: 0.4rem; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .img-preview {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      margin: 1rem 0 1.5rem;
+      display: block;
+    }
+
+    pre {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      margin-bottom: 1.25rem;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #f1f5f9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background: rgba(99, 102, 241, 0.15);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid #10b981; }
+    .badge-phase { background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid #06b6d4; }
+
+    /* Print Optimizations */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        padding: 0;
+      }
+      .btn-print { display: none; }
+      .card {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #111827 !important;
+        page-break-inside: avoid;
+      }
+      p, li { color: #334155 !important; }
+      pre {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      h2 { color: #1e1b4b !important; border-color: #cbd5e1 !important; }
+      h3 { color: #3730a3 !important; }
+      th { background: #e0e7ff !important; color: #1e1b4b !important; }
+      th, td { border-color: #cbd5e1 !important; }
+      .img-preview { border-color: #cbd5e1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-title">
+        <h1>Autonomous Robot Fleet Manager</h1>
+        <p>Complete Engineering Architecture, Implementation Phases & Study Guide</p>
+      </div>
+      <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </header>
+
+    <!-- Visual Dashboard Section -->
+    <section>
+      <h2>📸 1. Live Working Web Dashboard</h2>
+      <p>The interactive dashboard runs live on <code>http://localhost:8080/</code>, providing real-time SVG floor map tracking, Dijkstra route previews, priority mission queues, and AGV fleet statuses:</p>
+      <img src="/dashboard-preview.png" alt="Working Dashboard Preview" class="img-preview">
+    </section>
+
+    <!-- Baseline Section -->
+    <section>
+      <h2>🚩 2. Project Genesis: Where It Started</h2>
+      <div class="card">
+        <h3>Baseline Setup Before Redesign:</h3>
+        <ul>
+          <li><strong>Database Table:</strong> Single PostgreSQL table <code>robots</code> with columns <code>(id, current_node, battery_percent, status)</code>.</li>
+          <li><strong>Hardcoded Movement:</strong> <code>RobotMonitorService.java</code> moved all robots continuously through an endless hardcoded array:
+            <pre><code>String[] NODES = {"A", "B", "C", "D", "E"};
+int nextIdx = (currentIdx + 1) % NODES.length; // Blind cyclic rotation</code></pre>
+          </li>
+          <li><strong>No Topology:</strong> Corridors had no distances, no obstacles, and no track routing.</li>
+          <li><strong>No Missions:</strong> Robots had no customer tasks or delivery destinations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Five Phases -->
+    <section>
+      <h2>🚀 3. The 5 Evolutionary Phases</h2>
+
+      <div class="card">
+        <h3><span class="badge badge-phase">Phase 1</span> Task Management System</h3>
+        <p><strong>Goal:</strong> Transform random movement into customer-requested, prioritized missions.</p>
+        <ul>
+          <li><strong>JPA Entity:</strong> <code>Task.java</code> with fields <code>id</code> (e.g. <code>TSK-ED99D8</code>), <code>pickupNode</code>, <code>destinationNode</code>, <code>priority</code> (1-10), <code>status</code>, and <code>assignedRobotId</code>.</li>
+          <li><strong>State Machine (<code>TaskStatus.java</code>):</strong> <code>CREATED</code> ➔ <code>ASSIGNED</code> ➔ <code>RUNNING</code> ➔ <code>COMPLETED</code> / <code>FAILED</code>.</li>
+          <li><strong>REST API:</strong> <code>POST /api/tasks</code> (Create mission) and <code>GET /api/tasks</code> (List queue ordered by priority DESC).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="badge badge-phase">Phase 2</span> Warehouse Graph Topology & Dijkstra Router</h3>
+        <p><strong>Goal:</strong> Provide realistic spatial corridors and shortest path route optimization.</p>
+        <ul>
+          <li><strong>Graph Model (<code>WarehouseGraph.java</code>):</strong>
+            <ul>
+              <li>5 Stations: A (Alpha), B (Beta), C (Gamma), D (Delta), E (Epsilon).</li>
+              <li>Perimeter Single Corridors (Weight = 1): A-B, B-C, C-D, D-E, E-A.</li>
+              <li>Cross-Aisle Diagonal Expressways (Weight = 2): B-D, A-C.</li>
+            </ul>
+          </li>
+          <li><strong>Dijkstra Algorithm (<code>RouterService.java</code>):</strong>
+            <ul>
+              <li>Calculates mathematical shortest path using <code>PriorityQueue&lt;NodeDistance&gt;</code>.</li>
+              <li>Example: Route A ➔ C calculates direct diagonal <code>[A, C]</code> with cost = 2.</li>
+            </ul>
+          </li>
+          <li><strong>Interactive SVG Map:</strong> Added to <code>index.html</code> with glowing route highlights and station click listeners.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="badge badge-phase">Phase 3 & 4</span> Dispatcher Engine & Autonomous Navigation</h3>
+        <p><strong>Goal:</strong> Match eligible idle robots to missions and guide them step-by-step.</p>
+        <ul>
+          <li><strong>Dispatcher Engine (<code>DispatcherService.java</code>):</strong>
+            <ul>
+              <li>Selects highest priority <code>CREATED</code> tasks.</li>
+              <li>Filters available robots: <code>status == IDLE</code> and <code>battery >= 25%</code>.</li>
+              <li>Prevents double assignment by atomically locking robot to task.</li>
+            </ul>
+          </li>
+          <li><strong>Mission Navigation Loop (<code>RobotMonitorService.java</code>):</strong>
+            <ol>
+              <li>Robot at Start Node ➔ Navigates Dijkstra route to <strong>Pickup Station</strong>.</li>
+              <li>Arrives at Pickup ➔ Task transitions to <code>RUNNING</code>.</li>
+              <li>Navigates Dijkstra route from Pickup to <strong>Destination Station</strong>.</li>
+              <li>Arrives at Destination ➔ Task transitions to <code>COMPLETED</code>.</li>
+              <li>Robot halts and transitions back to <code>IDLE</code> standby.</li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="badge badge-phase">Phase 5</span> Exclusive Resource Scheduling & Deadlock Prevention</h3>
+        <p><strong>Goal:</strong> Guarantee zero physical collisions and circular deadlocks on single-lane corridors.</p>
+        <ul>
+          <li><strong>Exclusive Station Locks:</strong> Only one robot can occupy a station node at a time (<code>tryReserveNode</code>).</li>
+          <li><strong>Canonical Single-Lane Edge Locks:</strong> Corridors are shared tracks. To prevent head-on crashes, keys are canonically sorted:
+            <pre><code>String edgeKey = (u.compareTo(v) < 0) ? (u + "-" + v) : (v + "-" + u);</code></pre>
+            Robot entering A ➔ B locks <code>"A-B"</code>, blocking opposing robot from entering B ➔ A.
+          </li>
+          <li><strong>Deadlock Counter & Detour Bypasses:</strong>
+            <ul>
+              <li>When blocked, robot yields (status: <code>WAITING</code>) and increments <code>waitCounters</code>.</li>
+              <li>At &ge; 2 wait cycles, <code>RouterService.findShortestPathAvoidingNodes</code> calculates a dynamic detour bypass around the blocked node, breaking circular waits!</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CLI & Command Sheet -->
+    <section>
+      <h2>💻 4. Command Line Manual (Cheat Sheet)</h2>
+
+      <h3>1. Build and Run Tests</h3>
+      <pre><code># Run all 18 automated Unit & Integration tests:
+cmd.exe /c "mvnw.cmd test"
+
+# Launch Spring Boot in dev server mode:
+cmd.exe /c "mvnw.cmd spring-boot:run"</code></pre>
+
+      <h3>2. REST API cURL Commands</h3>
+      <pre><code># Dispatch a new task (Pickup at A, Destination at C, Priority 10):
+cmd.exe /c "curl.exe -s -X POST -H \"Content-Type: application/json\" -d \"{\"pickupNode\":\"A\",\"destinationNode\":\"C\",\"priority\":10}\" http://localhost:8080/api/tasks"
+
+# View all queued and completed tasks:
+cmd.exe /c "curl.exe -s http://localhost:8080/api/tasks"
+
+# Test simultaneous opposing missions (Collision Avoidance Demo):
+cmd.exe /c "curl.exe -s -X POST -H \"Content-Type: application/json\" -d \"{\"pickupNode\":\"A\",\"destinationNode\":\"C\",\"priority\":10}\" http://localhost:8080/api/tasks & curl.exe -s -X POST -H \"Content-Type: application/json\" -d \"{\"pickupNode\":\"C\",\"destinationNode\":\"A\",\"priority\":9}\" http://localhost:8080/api/tasks"
+
+# Inspect active node and corridor reservations:
+cmd.exe /c "curl.exe -s http://localhost:8080/api/warehouse/reservations"
+
+# Get Dijkstra shortest route between stations:
+cmd.exe /c "curl.exe -s \"http://localhost:8080/api/warehouse/route?from=A&to=C\""</code></pre>
+
+      <h3>3. PostgreSQL Direct Inspection</h3>
+      <pre><code># View tasks table in PostgreSQL:
+"C:\Program Files\PostgreSQL\18\bin\psql.exe" -U postgres -d fleetdb -c "SELECT id, pickup_node, destination_node, priority, status, assigned_robot_id FROM tasks ORDER BY created_at DESC LIMIT 10;"
+
+# View robots table:
+"C:\Program Files\PostgreSQL\18\bin\psql.exe" -U postgres -d fleetdb -c "SELECT id, current_node, battery_percent, status FROM robots ORDER BY id ASC;"</code></pre>
+    </section>
+
+    <!-- Verification Table -->
+    <section>
+      <h2>✅ 5. Test Suite Verification Matrix (18/18 Passing)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Class</th>
+            <th>Tests</th>
+            <th>Result</th>
+            <th>Verified Behaviors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>TaskServiceTests</code></td>
+            <td>4</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td>Task creation, UUID prefix, status transitions, priority queue ordering</td>
+          </tr>
+          <tr>
+            <td><code>RouterServiceTests</code></td>
+            <td>5</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td>Dijkstra shortest paths, edge costs, detour paths avoiding blocked stations</td>
+          </tr>
+          <tr>
+            <td><code>DispatcherServiceTests</code></td>
+            <td>4</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td>Idle robot matching, battery &ge; 25% check, double assignment prevention</td>
+          </tr>
+          <tr>
+            <td><code>ResourceSchedulerTests</code></td>
+            <td>4</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td>Exclusive station locks, head-on corridor locking, deadlock wait counter, bypass routing</td>
+          </tr>
+          <tr>
+            <td><code>FleetmanagerApplicationTests</code></td>
+            <td>1</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td>Spring Boot full application context load</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer style="border-top: 1px solid var(--border); padding-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem; text-align: center;">
+      Autonomous Robot Fleet Manager — Complete Engineering Study Guide &copy; 2026.
+    </footer>
+  </div>
+</body>
+</html>

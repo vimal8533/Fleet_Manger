@@ -211,12 +211,46 @@
       letter-spacing: -0.025em;
     }
 
-    /* Robots Grid */
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-tabs {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.25rem;
+      gap: 0.25rem;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
     }
 
     .section-title {
@@ -321,6 +355,13 @@
       background: rgba(245, 158, 11, 0.15);
       color: #fcd34d;
       border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-waiting {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.2);
     }
 
     /* Node & Battery specs */
@@ -598,6 +639,120 @@
       background: rgba(244, 63, 94, 0.2);
       border-color: #fb7185;
     }
+
+    .btn-edit {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-edit:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      color: #ffffff;
+    }
+
+    /* Warehouse Map & Task Mission Control */
+    .mission-section {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 990px) {
+      .mission-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mission-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 300px;
+      background: radial-gradient(circle at 50% 50%, rgba(30, 41, 67, 0.5) 0%, rgba(10, 13, 20, 0.85) 100%);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track-edge {
+      stroke: rgba(255, 255, 255, 0.15);
+      stroke-width: 3;
+      stroke-dasharray: 4 3;
+      transition: all 0.3s ease;
+    }
+
+    .track-edge.active-route {
+      stroke: #06b6d4;
+      stroke-width: 4.5;
+      stroke-dasharray: none;
+      filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.8));
+    }
+
+    .node-group {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .node-group:hover circle.node-base {
+      fill: #222d45;
+      stroke: #06b6d4;
+      stroke-width: 3;
+    }
+
+    .task-queue-box {
+      max-height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-right: 0.25rem;
+    }
+
+    .task-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-size: 0.8125rem;
+    }
+
+    .status-badge {
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .status-CREATED { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-ASSIGNED { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); }
+    .status-RUNNING { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .status-COMPLETED { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-FAILED { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
   </style>
 </head>
 <body>
@@ -621,6 +776,15 @@
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
           Deploy AGV
+        </button>
+        <button id="bulkDeployBtn" class="btn-add" style="background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%); box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);" onclick="openBulkModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Bulk Deploy
         </button>
         <button id="refreshBtn" class="btn-refresh" onclick="fetchRobots()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -651,12 +815,125 @@
       </div>
     </section>
 
+    <!-- Warehouse Floor Map & Task Mission Control -->
+    <section class="mission-section">
+      <!-- Left: Interactive Warehouse Map -->
+      <div class="mission-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-size: 1.125rem; font-weight: 700;">Warehouse Topology Floor Map</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">5-Station Graph with Live AGV Position Telemetry</p>
+          </div>
+          <div id="routePreviewBadge" style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 6px; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); color: #22d3ee; display: none;">
+            Route: -
+          </div>
+        </div>
+
+        <div class="map-container">
+          <svg id="warehouseSvg" width="100%" height="100%" viewBox="0 0 520 330" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <!-- Track Lines will be rendered dynamically -->
+            <g id="tracksLayer"></g>
+            <!-- Stations will be rendered dynamically -->
+            <g id="stationsLayer"></g>
+          </svg>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; font-size: 0.78rem; color: var(--text-muted); flex-wrap: wrap;">
+          <span>🟢 Outer Ring: 1 unit</span>
+          <span>⚡ Diagonal Cross-Aisles: 2 units</span>
+          <span style="color: var(--accent-cyan);">Cyan highlight: Dijkstra shortest path</span>
+        </div>
+      </div>
+
+      <!-- Right: Task Mission Dispatcher -->
+      <div class="mission-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-size: 1.125rem; font-weight: 700;">Task Mission Dispatch</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Create Task with Dijkstra Path Calculation</p>
+          </div>
+          <span id="activeTasksCount" style="font-size: 0.75rem; padding: 0.2rem 0.55rem; border-radius: 9999px; background: rgba(255,255,255,0.06); color: var(--text-muted);">0 Tasks</span>
+        </div>
+
+        <form id="createTaskForm" onsubmit="submitNewTask(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 0.8fr; gap: 0.6rem;">
+            <div>
+              <label class="form-label" style="font-size: 0.75rem;">Pickup Station</label>
+              <select id="taskPickup" class="form-select" style="font-size: 0.8rem; padding: 0.45rem 0.6rem;" onchange="calculateRoutePreview()" required>
+                <option value="A" selected>Station A</option>
+                <option value="B">Station B</option>
+                <option value="C">Station C</option>
+                <option value="D">Station D</option>
+                <option value="E">Station E</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size: 0.75rem;">Destination Station</label>
+              <select id="taskDestination" class="form-select" style="font-size: 0.8rem; padding: 0.45rem 0.6rem;" onchange="calculateRoutePreview()" required>
+                <option value="A">Station A</option>
+                <option value="B">Station B</option>
+                <option value="C" selected>Station C</option>
+                <option value="D">Station D</option>
+                <option value="E">Station E</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" style="font-size: 0.75rem;">Priority</label>
+              <input type="number" id="taskPriority" min="1" max="10" value="5" class="form-input" style="font-size: 0.8rem; padding: 0.45rem 0.6rem;" required />
+            </div>
+          </div>
+
+          <div id="routePreviewText" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-cyan); background: rgba(6, 182, 212, 0.06); padding: 0.45rem 0.75rem; border-radius: 6px; border: 1px solid rgba(6, 182, 212, 0.2);">
+            Calculating Dijkstra route...
+          </div>
+
+          <button type="submit" class="btn-add" style="justify-content: center; width: 100%; font-size: 0.85rem; padding: 0.55rem;">
+            ⚡ Dispatch AGV Mission
+          </button>
+        </form>
+
+        <div style="margin-top: 0.25rem;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">
+            Recent Mission Queue
+          </div>
+          <div id="taskQueueList" class="task-queue-box">
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 1rem;">No tasks queued</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Fleet Grid -->
     <div class="section-header">
-      <h2 class="section-title">
-        <span>Active Robots</span>
-        <span id="robotCountBadge" style="font-size: 0.8125rem; padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.06); border-radius: 9999px; color: var(--text-muted);">-</span>
-      </h2>
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <h2 class="section-title">
+          <span>Active Robots</span>
+          <span id="robotCountBadge" style="font-size: 0.8125rem; padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.06); border-radius: 9999px; color: var(--text-muted);">-</span>
+        </h2>
+        <div class="filter-tabs">
+          <button class="filter-btn active" id="filter-ALL" onclick="setFilter('ALL')">All Units</button>
+          <button class="filter-btn" id="filter-MOVING" onclick="setFilter('MOVING')">⚡ Moving</button>
+          <button class="filter-btn" id="filter-CHARGING" onclick="setFilter('CHARGING')">🔋 Charging</button>
+          <button class="filter-btn" id="filter-IDLE" onclick="setFilter('IDLE')">⏸ Idle</button>
+        </div>
+        <select id="nodeFilterSelect" class="form-select" style="width: auto; padding: 0.35rem 0.75rem; font-size: 0.8125rem; border-radius: 8px;" onchange="setNodeFilter(this.value)">
+          <option value="">All Stations (Nodes)</option>
+          <option value="A">📍 Station A</option>
+          <option value="B">📍 Station B</option>
+          <option value="C">📍 Station C</option>
+          <option value="D">📍 Station D</option>
+          <option value="E">📍 Station E</option>
+        </select>
+        <button class="filter-btn" id="lowBatteryToggle" onclick="toggleLowBattery()" style="border: 1px solid rgba(244, 63, 94, 0.3); color: #fb7185;">
+          ⚠️ Low Battery (&lt;25%)
+        </button>
+      </div>
       <div style="font-size: 0.8125rem; color: var(--text-muted); font-family: var(--font-mono);" id="lastSyncTime">
         Auto-syncing every 3s
       </div>
@@ -712,16 +989,117 @@
       </div>
     </div>
 
+    <!-- Bulk Add Robots Modal -->
+    <div id="bulkModal" class="modal-overlay" onclick="handleBulkOverlayClick(event)">
+      <div class="modal-box" style="max-width: 540px;">
+        <div class="modal-header">
+          <h3 class="modal-title">Bulk Deploy AGVs</h3>
+          <button class="modal-close" onclick="closeBulkModal()">&times;</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 1rem;">
+          Paste a JSON array of robots or click <strong>Fill Sample</strong> to generate test AGVs. They will be saved to PostgreSQL in a single batch.
+        </p>
+        <form id="bulkRobotForm" onsubmit="submitBulkRobots(event)">
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label class="form-label" for="bulkJsonInput" style="margin-bottom: 0;">Robots JSON Array</label>
+              <button type="button" class="api-link" style="border: none; cursor: pointer; padding: 0.2rem 0.55rem; font-size: 0.75rem;" onclick="loadSampleBulkJson()">Fill Sample</button>
+            </div>
+            <textarea id="bulkJsonInput" class="form-input" rows="7" style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.4; resize: vertical;" placeholder='[&#10;  { "id": "R50", "Currentnode": "A", "batterypercent": 90, "status": "IDLE" }&#10;]' required></textarea>
+          </div>
+          <div id="bulkFormError" style="color: var(--accent-rose); font-size: 0.8125rem; margin-bottom: 0.75rem; display: none;"></div>
+          <div id="bulkFormSuccess" style="color: var(--accent-emerald); font-size: 0.8125rem; margin-bottom: 0.75rem; display: none;"></div>
+          <div class="modal-actions">
+            <button type="button" class="btn-refresh" onclick="closeBulkModal()">Cancel</button>
+            <button type="submit" class="btn-add" style="background: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);">Deploy Fleet Batch</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Robot Modal -->
+    <div id="editModal" class="modal-overlay" onclick="handleEditOverlayClick(event)">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 class="modal-title">Edit AGV <span id="editRobotIdTitle" style="color: var(--primary-light);"></span></h3>
+          <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <form id="editRobotForm" onsubmit="submitEditRobot(event)">
+          <input type="hidden" id="editRobotId" />
+          <div class="form-group">
+            <label class="form-label" for="editRobotNode">Assigned Node</label>
+            <select id="editRobotNode" class="form-select">
+              <option value="A">Node A</option>
+              <option value="B">Node B</option>
+              <option value="C">Node C</option>
+              <option value="D">Node D</option>
+              <option value="E">Node E</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editRobotBattery">Battery Level (<span id="editBatteryValLabel">100%</span>)</label>
+            <input type="range" id="editRobotBattery" min="0" max="100" value="100" class="form-input" style="padding: 0; cursor: pointer;" oninput="document.getElementById('editBatteryValLabel').textContent = this.value + '%'" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editRobotStatus">Operating Status</label>
+            <select id="editRobotStatus" class="form-select">
+              <option value="IDLE">IDLE (Standby)</option>
+              <option value="MOVING">MOVING (In Transit)</option>
+              <option value="CHARGING">CHARGING (Docked)</option>
+            </select>
+          </div>
+          <div id="editFormError" style="color: var(--accent-rose); font-size: 0.8125rem; margin-bottom: 0.75rem; display: none;"></div>
+          <div class="modal-actions">
+            <button type="button" class="btn-refresh" onclick="closeEditModal()">Cancel</button>
+            <button type="submit" class="btn-add">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <footer>
       <div>Fleet Manager Engine v0.0.1 • Spring Boot 4.1.1</div>
       <div style="display: flex; gap: 0.75rem; align-items: center;">
         <span>Direct REST API:</span>
         <a href="/api/robots" target="_blank" class="api-link">/api/robots ↗</a>
+        <a href="/actuator/health" target="_blank" class="api-link">DB Health ↗</a>
       </div>
     </footer>
   </div>
 
   <script>
+    let currentFilter = 'ALL';
+    let currentNodeFilter = '';
+    let isLowBatteryFilter = false;
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-tabs .filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`filter-${filter}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      fetchRobots();
+    }
+
+    function setNodeFilter(node) {
+      currentNodeFilter = node;
+      fetchRobots();
+    }
+
+    function toggleLowBattery() {
+      isLowBatteryFilter = !isLowBatteryFilter;
+      const btn = document.getElementById('lowBatteryToggle');
+      if (isLowBatteryFilter) {
+        btn.classList.add('active');
+        btn.style.background = 'var(--accent-rose)';
+        btn.style.color = '#fff';
+      } else {
+        btn.classList.remove('active');
+        btn.style.background = 'transparent';
+        btn.style.color = '#fb7185';
+      }
+      fetchRobots();
+    }
+
     async function fetchRobots() {
       const statusPill = document.getElementById('connectionStatus');
       const statusText = document.getElementById('statusText');
@@ -729,26 +1107,56 @@
       const lastSync = document.getElementById('lastSyncTime');
 
       try {
-        const res = await fetch('/api/robots');
-        if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-        const data = await res.json();
+        const allRes = await fetch('/api/robots');
+        if (!allRes.ok) throw new Error(`HTTP Error ${allRes.status}`);
+        const allData = await allRes.json();
 
-        // Update Connection Status
-        statusPill.className = 'status-pill';
-        statusText.textContent = 'System Online';
-
-        // Update Stats
-        const total = data.length;
-        const moving = data.filter(r => (r.status || '').toUpperCase() === 'MOVING').length;
-        const idle = data.filter(r => (r.status || '').toUpperCase() === 'IDLE').length;
-        const charging = data.filter(r => (r.status || '').toUpperCase() === 'CHARGING').length;
+        // Update overall Stats
+        const total = allData.length;
+        const moving = allData.filter(r => (r.status || '').toUpperCase() === 'MOVING').length;
+        const idle = allData.filter(r => (r.status || '').toUpperCase() === 'IDLE').length;
+        const charging = allData.filter(r => (r.status || '').toUpperCase() === 'CHARGING').length;
 
         document.getElementById('statTotal').textContent = total;
         document.getElementById('statMoving').textContent = moving;
         document.getElementById('statIdle').textContent = idle;
         document.getElementById('statCharging').textContent = charging;
-        document.getElementById('robotCountBadge').textContent = `${total} units`;
+
+        // Build Multi-Param Query String
+        const params = new URLSearchParams();
+        if (isLowBatteryFilter) {
+          params.append('lowBattery', 'true');
+        } else {
+          if (currentFilter !== 'ALL') {
+            params.append('status', currentFilter);
+          }
+          if (currentNodeFilter) {
+            params.append('node', currentNodeFilter);
+          }
+        }
+
+        const queryString = params.toString();
+        const targetUrl = queryString ? `/api/robots?${queryString}` : '/api/robots';
+
+        const filteredRes = await fetch(targetUrl);
+        const data = await filteredRes.json();
+
+        // Update Connection Status
+        statusPill.className = 'status-pill';
+        statusText.textContent = 'System Online';
+        document.getElementById('robotCountBadge').textContent = `${data.length} units`;
         lastSync.textContent = `Synced: ${new Date().toLocaleTimeString()}`;
+
+        if (data.length === 0) {
+          const filterDesc = isLowBatteryFilter ? 'Low Battery (<25%)' : `${currentFilter} ${currentNodeFilter ? 'at Node ' + currentNodeFilter : ''}`;
+          grid.innerHTML = `
+            <div class="empty-state">
+              <h3>No Robots Matching Filters</h3>
+              <p>No active robots found for criteria: <strong>${filterDesc}</strong>.</p>
+            </div>
+          `;
+          return;
+        }
 
         // Render Cards
         grid.innerHTML = data.map(robot => {
@@ -759,6 +1167,7 @@
           let badgeClass = 'badge-idle';
           if (status === 'MOVING') badgeClass = 'badge-moving';
           else if (status === 'CHARGING') badgeClass = 'badge-charging';
+          else if (status === 'WAITING' || status.includes('WAIT')) badgeClass = 'badge-waiting';
 
           let batteryClass = 'battery-high';
           if (battery < 25) batteryClass = 'battery-low';
@@ -779,6 +1188,7 @@
                     <span class="pulse-dot" style="width: 6px; height: 6px;"></span>
                     ${status}
                   </div>
+                  <button class="btn-edit" title="Edit ${robot.id}" onclick="openEditModal('${robot.id}', '${node}', ${battery}, '${status}')">✎ Edit</button>
                   <button class="btn-delete" title="Decommission ${robot.id}" onclick="deleteRobot('${robot.id}')">✕</button>
                 </div>
               </div>
@@ -884,6 +1294,346 @@
         alert(err.message);
       }
     }
+
+    // Bulk Modal Handlers
+    function openBulkModal() {
+      const modal = document.getElementById('bulkModal');
+      const err = document.getElementById('bulkFormError');
+      const succ = document.getElementById('bulkFormSuccess');
+      err.style.display = 'none';
+      succ.style.display = 'none';
+      if (!document.getElementById('bulkJsonInput').value.trim()) {
+        loadSampleBulkJson();
+      }
+      modal.classList.add('active');
+    }
+
+    function closeBulkModal() {
+      document.getElementById('bulkModal').classList.remove('active');
+    }
+
+    function handleBulkOverlayClick(e) {
+      if (e.target.id === 'bulkModal') closeBulkModal();
+    }
+
+    function loadSampleBulkJson() {
+      const num = Math.floor(Math.random() * 80) + 30;
+      const sample = [
+        { id: `R${num}`, Currentnode: "A", batterypercent: 92, status: "IDLE" },
+        { id: `R${num + 1}`, Currentnode: "C", batterypercent: 75, status: "MOVING" },
+        { id: `R${num + 2}`, Currentnode: "E", batterypercent: 40, status: "CHARGING" }
+      ];
+      document.getElementById('bulkJsonInput').value = JSON.stringify(sample, null, 2);
+    }
+
+    async function submitBulkRobots(e) {
+      e.preventDefault();
+      const rawText = document.getElementById('bulkJsonInput').value.trim();
+      const err = document.getElementById('bulkFormError');
+      const succ = document.getElementById('bulkFormSuccess');
+      err.style.display = 'none';
+      succ.style.display = 'none';
+
+      let parsed;
+      try {
+        parsed = JSON.parse(rawText);
+        if (!Array.isArray(parsed)) throw new Error("JSON must be an array: [ ... ]");
+        if (parsed.length === 0) throw new Error("Robot array cannot be empty.");
+      } catch (parseErr) {
+        err.textContent = "Invalid JSON: " + parseErr.message;
+        err.style.display = 'block';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/robots/bulk', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(parsed)
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.message || `Failed to add bulk robots (${res.status})`);
+        }
+
+        const data = await res.json();
+        succ.textContent = `Successfully deployed ${data.length} robots!`;
+        succ.style.display = 'block';
+        setTimeout(() => {
+          closeBulkModal();
+          fetchRobots();
+        }, 800);
+      } catch (apiErr) {
+        err.textContent = apiErr.message;
+        err.style.display = 'block';
+      }
+    }
+
+    // Edit Modal Handlers
+    function openEditModal(id, node, battery, status) {
+      const modal = document.getElementById('editModal');
+      const err = document.getElementById('editFormError');
+      err.style.display = 'none';
+      document.getElementById('editRobotId').value = id;
+      document.getElementById('editRobotIdTitle').textContent = id;
+      document.getElementById('editRobotNode').value = (node && node !== 'N/A') ? node : 'A';
+      document.getElementById('editRobotBattery').value = battery;
+      document.getElementById('editBatteryValLabel').textContent = battery + '%';
+      document.getElementById('editRobotStatus').value = status;
+      modal.classList.add('active');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('active');
+    }
+
+    function handleEditOverlayClick(e) {
+      if (e.target.id === 'editModal') closeEditModal();
+    }
+
+    async function submitEditRobot(e) {
+      e.preventDefault();
+      const id = document.getElementById('editRobotId').value;
+      const Currentnode = document.getElementById('editRobotNode').value;
+      const batterypercent = parseInt(document.getElementById('editRobotBattery').value, 10);
+      const status = document.getElementById('editRobotStatus').value;
+      const err = document.getElementById('editFormError');
+
+      try {
+        const res = await fetch(`/api/robots/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ Currentnode, batterypercent, status })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.message || `Failed to update robot (${res.status})`);
+        }
+
+        closeEditModal();
+        await fetchRobots();
+      } catch (e) {
+        err.textContent = e.message;
+        err.style.display = 'block';
+      }
+    }
+
+    // Warehouse Floor Map & Task System Logic
+    const WAREHOUSE_NODES = {
+      'A': { id: 'A', name: 'Alpha', x: 80, y: 70 },
+      'B': { id: 'B', name: 'Beta', x: 340, y: 70 },
+      'C': { id: 'C', name: 'Gamma', x: 440, y: 220 },
+      'D': { id: 'D', name: 'Delta', x: 260, y: 280 },
+      'E': { id: 'E', name: 'Epsilon', x: 60, y: 220 }
+    };
+
+    const WAREHOUSE_EDGES = [
+      { from: 'A', to: 'B', weight: 1 },
+      { from: 'B', to: 'C', weight: 1 },
+      { from: 'C', to: 'D', weight: 1 },
+      { from: 'D', to: 'E', weight: 1 },
+      { from: 'E', to: 'A', weight: 1 },
+      { from: 'B', to: 'D', weight: 2 },
+      { from: 'A', to: 'C', weight: 2 }
+    ];
+
+    let currentDijkstraPath = [];
+
+    function renderWarehouseMap(robotsAtNodes = {}) {
+      const tracksLayer = document.getElementById('tracksLayer');
+      const stationsLayer = document.getElementById('stationsLayer');
+      if (!tracksLayer || !stationsLayer) return;
+
+      // Render Tracks/Edges
+      tracksLayer.innerHTML = WAREHOUSE_EDGES.map((edge, idx) => {
+        const n1 = WAREHOUSE_NODES[edge.from];
+        const n2 = WAREHOUSE_NODES[edge.to];
+        const isHighlighted = isEdgeInPath(edge.from, edge.to, currentDijkstraPath);
+        const midX = (n1.x + n2.x) / 2;
+        const midY = (n1.y + n2.y) / 2;
+
+        return `
+          <g>
+            <line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}"
+                  class="track-edge ${isHighlighted ? 'active-route' : ''}" />
+            <circle cx="${midX}" cy="${midY}" r="9" fill="#111625" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+            <text x="${midX}" y="${midY + 3.5}" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="var(--font-mono)">${edge.weight}</text>
+          </g>
+        `;
+      }).join('');
+
+      // Render Station Nodes
+      stationsLayer.innerHTML = Object.values(WAREHOUSE_NODES).map(node => {
+        const occupants = robotsAtNodes[node.id] || [];
+        const isPickup = (document.getElementById('taskPickup')?.value === node.id);
+        const isDest = (document.getElementById('taskDestination')?.value === node.id);
+        const strokeColor = isPickup ? '#10b981' : (isDest ? '#06b6d4' : '#818cf8');
+
+        return `
+          <g class="node-group" onclick="selectStationForTask('${node.id}')">
+            <!-- Node Base Circle -->
+            <circle cx="${node.x}" cy="${node.y}" r="22" class="node-base" fill="#111625" stroke="${strokeColor}" stroke-width="2.5" />
+            <text x="${node.x}" y="${node.y - 1}" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800" font-family="var(--font-mono)">${node.id}</text>
+            <text x="${node.x}" y="${node.y + 11}" text-anchor="middle" fill="#94a3b8" font-size="7.5" font-family="var(--font-sans)">${node.name}</text>
+            
+            <!-- Occupant Robot Badges -->
+            ${occupants.length > 0 ? `
+              <circle cx="${node.x + 18}" cy="${node.y - 14}" r="11" fill="#6366f1" stroke="#ffffff" stroke-width="1.5" />
+              <text x="${node.x + 18}" y="${node.y - 10.5}" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="800">${occupants.length}</text>
+              <text x="${node.x}" y="${node.y + 36}" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="var(--font-mono)">${occupants.map(r => r.id).join(', ')}</text>
+            ` : `
+              <text x="${node.x}" y="${node.y + 36}" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="8.5">Empty</text>
+            `}
+          </g>
+        `;
+      }).join('');
+    }
+
+    function isEdgeInPath(u, v, path) {
+      if (!path || path.length < 2) return false;
+      for (let i = 0; i < path.length - 1; i++) {
+        if ((path[i] === u && path[i + 1] === v) || (path[i] === v && path[i + 1] === u)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function selectStationForTask(nodeId) {
+      const pickup = document.getElementById('taskPickup');
+      const dest = document.getElementById('taskDestination');
+      if (pickup && dest) {
+        if (pickup.value === nodeId) {
+          dest.value = nodeId;
+        } else {
+          pickup.value = nodeId;
+        }
+        calculateRoutePreview();
+      }
+    }
+
+    async function calculateRoutePreview() {
+      const from = document.getElementById('taskPickup')?.value;
+      const to = document.getElementById('taskDestination')?.value;
+      const previewText = document.getElementById('routePreviewText');
+      const previewBadge = document.getElementById('routePreviewBadge');
+
+      if (!from || !to) return;
+
+      if (from === to) {
+        currentDijkstraPath = [from];
+        previewText.textContent = `⚠️ Pickup and Destination cannot be the same station.`;
+        previewText.style.color = 'var(--accent-amber)';
+        if (previewBadge) previewBadge.style.display = 'none';
+        renderWarehouseMap();
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/warehouse/route?from=${from}&to=${to}`);
+        if (!res.ok) throw new Error('Route calculation failed');
+        const data = await res.json();
+        currentDijkstraPath = data.path || [];
+
+        previewText.innerHTML = `✅ Shortest Route: <strong>${data.path.join(' ➔ ')}</strong> (Distance: ${data.totalDistance} units)`;
+        previewText.style.color = 'var(--accent-cyan)';
+
+        if (previewBadge) {
+          previewBadge.textContent = `Dijkstra: ${data.path.join(' ➔ ')} (${data.totalDistance}u)`;
+          previewBadge.style.display = 'inline-block';
+        }
+
+        renderWarehouseMap();
+      } catch (err) {
+        previewText.textContent = err.message;
+      }
+    }
+
+    async function submitNewTask(e) {
+      e.preventDefault();
+      const pickupNode = document.getElementById('taskPickup').value;
+      const destinationNode = document.getElementById('taskDestination').value;
+      const priority = parseInt(document.getElementById('taskPriority').value, 10);
+
+      try {
+        const res = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pickupNode, destinationNode, priority })
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.message || 'Failed to create task');
+        }
+
+        await fetchTasks();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function fetchTasks() {
+      try {
+        const res = await fetch('/api/tasks');
+        if (!res.ok) return;
+        const tasks = await res.json();
+
+        const countBadge = document.getElementById('activeTasksCount');
+        if (countBadge) countBadge.textContent = `${tasks.length} Missions`;
+
+        const queueList = document.getElementById('taskQueueList');
+        if (!queueList) return;
+
+        if (tasks.length === 0) {
+          queueList.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 1rem;">No tasks queued</div>`;
+          return;
+        }
+
+        queueList.innerHTML = tasks.slice(0, 10).map(t => `
+          <div class="task-row">
+            <div>
+              <span style="font-family: var(--font-mono); font-weight: 700; color: #fff;">${t.id}</span>
+              <span style="margin-left: 0.5rem; color: var(--accent-cyan); font-family: var(--font-mono);">Node ${t.pickupNode} ➔ Node ${t.destinationNode}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 0.7rem; color: var(--text-muted);">P${t.priority}</span>
+              <span class="status-badge status-${t.status}">${t.status}</span>
+              ${t.assignedRobotId ? `<span style="font-family: var(--font-mono); font-size: 0.75rem; color: #818cf8;">${t.assignedRobotId}</span>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+      }
+    }
+
+    // Extended fetchRobots to update map occupancy
+    const originalFetchRobots = fetchRobots;
+    fetchRobots = async function() {
+      await originalFetchRobots();
+      try {
+        const res = await fetch('/api/robots');
+        if (res.ok) {
+          const robots = await res.json();
+          const robotsAtNodes = {};
+          robots.forEach(r => {
+            const node = (r.Currentnode || r.currentnode || 'A').toUpperCase();
+            if (!robotsAtNodes[node]) robotsAtNodes[node] = [];
+            robotsAtNodes[node].push(r);
+          });
+          renderWarehouseMap(robotsAtNodes);
+        }
+      } catch (e) {}
+      await fetchTasks();
+    };
+
+    // Initial Route Preview & Map Render
+    calculateRoutePreview();
+    fetchTasks();
 
     // Initial Fetch & recurring sync
     fetchRobots();
