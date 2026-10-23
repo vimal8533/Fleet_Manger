@@ -1,0 +1,6 @@
+target/
+.git/
+.vscode/
+*.md
+*.pdf
+.mvn/wrapper/maven-wrapper.jar

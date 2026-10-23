@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: fleetmanager-service
+    runtime: docker
+    rootDir: fleetmanager
+    dockerfilePath: ./Dockerfile
+    plan: free
+    branch: main
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: fleetdb
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: fleetdb
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: fleetdb
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: fleetdb
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: fleetdb
+          property: password
+      - key: ROBOT_API_KEY
+        generateValue: true
+
+databases:
+  - name: fleetdb
+    databaseName: fleetdb
+    user: postgres
+    plan: free

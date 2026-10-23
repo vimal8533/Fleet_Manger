@@ -792,6 +792,9 @@
           </svg>
           Sync Now
         </button>
+        <button id="apiKeyBtn" class="btn-refresh" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);" onclick="openApiKeyModal()">
+          🔑 API Key
+        </button>
       </div>
     </header>
 
@@ -1057,6 +1060,30 @@
       </div>
     </div>
 
+    <!-- API Key Settings Modal -->
+    <div id="apiKeyModal" class="modal-overlay" onclick="handleApiKeyOverlayClick(event)">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 class="modal-title">Robot Control API Key</h3>
+          <button class="modal-close" onclick="closeApiKeyModal()">&times;</button>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 1rem;">
+          If <code>ROBOT_API_KEY</code> is set on Render, enter it below to authorize robot registration, editing, and deletion. Leave blank for unauthenticated local mode.
+        </p>
+        <form id="apiKeyForm" onsubmit="saveApiKey(event)">
+          <div class="form-group">
+            <label class="form-label" for="apiKeyInput">Secret API Key (X-API-KEY)</label>
+            <input type="password" id="apiKeyInput" class="form-input" placeholder="e.g. your-render-robot-key" autocomplete="off" />
+          </div>
+          <div id="apiKeyStatus" style="color: var(--accent-emerald); font-size: 0.8125rem; margin-bottom: 0.75rem; display: none;">Key saved to local browser!</div>
+          <div class="modal-actions">
+            <button type="button" class="btn-refresh" onclick="clearApiKey()">Clear Key</button>
+            <button type="submit" class="btn-add">Save Key</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <footer>
       <div>Fleet Manager Engine v0.0.1 • Spring Boot 4.1.1</div>
       <div style="display: flex; gap: 0.75rem; align-items: center;">
@@ -1235,6 +1262,53 @@
       }
     }
 
+    // Security & Auth Header Helper for Render Protected Control APIs
+    function getAuthHeaders(customHeaders = {}) {
+      const headers = { ...customHeaders };
+      const key = localStorage.getItem('fleet_api_key') || '';
+      if (key.trim()) {
+        headers['X-API-KEY'] = key.trim();
+      }
+      return headers;
+    }
+
+    function openApiKeyModal() {
+      const modal = document.getElementById('apiKeyModal');
+      document.getElementById('apiKeyInput').value = localStorage.getItem('fleet_api_key') || '';
+      document.getElementById('apiKeyStatus').style.display = 'none';
+      modal.classList.add('active');
+    }
+
+    function closeApiKeyModal() {
+      document.getElementById('apiKeyModal').classList.remove('active');
+    }
+
+    function handleApiKeyOverlayClick(e) {
+      if (e.target.id === 'apiKeyModal') closeApiKeyModal();
+    }
+
+    function saveApiKey(e) {
+      e.preventDefault();
+      const val = document.getElementById('apiKeyInput').value.trim();
+      if (val) {
+        localStorage.setItem('fleet_api_key', val);
+      } else {
+        localStorage.removeItem('fleet_api_key');
+      }
+      const status = document.getElementById('apiKeyStatus');
+      status.textContent = val ? 'API Key saved to browser!' : 'API Key cleared!';
+      status.style.display = 'block';
+      setTimeout(() => closeApiKeyModal(), 700);
+    }
+
+    function clearApiKey() {
+      localStorage.removeItem('fleet_api_key');
+      document.getElementById('apiKeyInput').value = '';
+      const status = document.getElementById('apiKeyStatus');
+      status.textContent = 'API Key cleared!';
+      status.style.display = 'block';
+    }
+
     // Modal Handlers
     function openAddModal() {
       const modal = document.getElementById('addModal');
@@ -1267,11 +1341,14 @@
       try {
         const res = await fetch('/api/robots', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ id, Currentnode, batterypercent, status })
         });
 
         if (!res.ok) {
+          if (res.status === 401) {
+            throw new Error('401 Unauthorized: Please click 🔑 API Key in the top header and enter your ROBOT_API_KEY.');
+          }
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.message || `Failed to add robot (${res.status})`);
         }
@@ -1287,8 +1364,16 @@
     async function deleteRobot(id) {
       if (!confirm(`Are you sure you want to decommission AGV ${id}?`)) return;
       try {
-        const res = await fetch(`/api/robots/${id}`, { method: 'DELETE' });
-        if (!res.ok && res.status !== 204) throw new Error('Failed to delete robot');
+        const res = await fetch(`/api/robots/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        if (!res.ok && res.status !== 204) {
+          if (res.status === 401) {
+            throw new Error('401 Unauthorized: Please click 🔑 API Key in the top header and enter your ROBOT_API_KEY.');
+          }
+          throw new Error('Failed to delete robot');
+        }
         await fetchRobots();
       } catch (err) {
         alert(err.message);
@@ -1348,11 +1433,14 @@
       try {
         const res = await fetch('/api/robots/bulk', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify(parsed)
         });
 
         if (!res.ok) {
+          if (res.status === 401) {
+            throw new Error('401 Unauthorized: Please click 🔑 API Key in the top header and enter your ROBOT_API_KEY.');
+          }
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.message || `Failed to add bulk robots (${res.status})`);
         }
@@ -1403,11 +1491,14 @@
       try {
         const res = await fetch(`/api/robots/${id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ Currentnode, batterypercent, status })
         });
 
         if (!res.ok) {
+          if (res.status === 401) {
+            throw new Error('401 Unauthorized: Please click 🔑 API Key in the top header and enter your ROBOT_API_KEY.');
+          }
           const errData = await res.json().catch(() => ({}));
           throw new Error(errData.message || `Failed to update robot (${res.status})`);
         }
